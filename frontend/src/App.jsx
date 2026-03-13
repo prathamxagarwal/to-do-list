@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
+
 function App() {
 
   const [title, setTitle] = useState("");
@@ -23,7 +26,9 @@ function App() {
   };
 
   useEffect(() => {
+
     fetchTodos();
+
   }, []);
 
   const addTodo = async () => {
@@ -48,37 +53,43 @@ function App() {
 
   };
 
-  const deleteTodo=async(id)=>{
-    try{
-      await axios.delete(`http://localhost:5000/api/todos/${id}`);
-      fetchTodos();
-    }catch(error){
-      console.error(error);
-    }
-  };
+  const deleteTodo = async (id) => {
+
+  try {
+
+    await axios.delete(`http://localhost:5000/api/todos/${id}`);
+
+    setTodos((prevTodos) =>
+      prevTodos.filter((todo) => todo.id !== id)
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+};
 
   return (
+
     <div>
 
       <h1>Todo App</h1>
 
-      <input
-        type="text"
-        placeholder="Enter todo"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+      <TodoForm
+        title={title}
+        setTitle={setTitle}
+        addTodo={addTodo}
       />
 
-      <button onClick={addTodo}>Add</button>
-
-      {todos.map((todo) => (
-        <div key={todo.id}>
-          {todo.title}
-          <button onClick={()=> deleteTodo(todo.id)}>Delete</button>
-        </div>
-      ))}
+      <TodoList
+        todos={todos}
+        deleteTodo={deleteTodo}
+      />
 
     </div>
+
   );
 
 }
