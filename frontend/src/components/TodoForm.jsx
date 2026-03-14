@@ -1,16 +1,17 @@
 function TodoForm({ title, setTitle, addTodo }) {
 
   return (
-    <div>
+    <div className="form">
 
       <input
+        className="todo-input"
         type="text"
         placeholder="Enter todo"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
 
-      <button onClick={addTodo}>
+      <button className="add-btn" onClick={addTodo}>
         Add
       </button>
 

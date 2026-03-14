@@ -50,4 +50,45 @@ router.delete("/todos/:id",async(req,res)=>{
     }
  });
 
+router.put("/todos/:id",async(req,res)=>{
+    const { id } = req.params;
+    const { completed } = req.body;
+
+    try{
+        const result = await pool.query(
+            "UPDATE todos SET completed=$1 WHERE id=$2 RETURNING *",
+            [completed, id]
+
+        );
+
+        res.json(result.rows[0]);
+    } catch(error){
+        console.error(error);
+        res.status(500).json({error:"Server error"});
+    }
+});
+
+router.put("/todos/title/:id", async (req, res) => {
+
+  const { id } = req.params;
+  const { title } = req.body;
+
+  try {
+
+    const result = await pool.query(
+      "UPDATE todos SET title=$1 WHERE id=$2 RETURNING *",
+      [title, id]
+    );
+
+    res.json(result.rows[0]);
+
+  } catch (error) {
+
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+
+  }
+
+});
+
 module.exports = router;
