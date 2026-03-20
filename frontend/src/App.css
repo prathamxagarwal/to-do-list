@@ -1,72 +1,63 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #1e1e1e;
-  color: white;
   margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #1e1e2f, #12121c);
+  color: white;
 }
 
-.app-container {
-  width: 400px;
-  margin: 80px auto;
+.container {
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 30px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.title {
+h1 {
   text-align: center;
-  margin-bottom: 30px;
-}
-
-.form {
-  display: flex;
-  gap: 10px;
   margin-bottom: 20px;
 }
 
-.todo-input {
+.input-box {
+  display: flex;
+  gap: 10px;
+}
+
+input {
   flex: 1;
   padding: 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
   outline: none;
 }
 
-.add-btn {
-  padding: 10px 16px;
+button {
+  padding: 10px 14px;
   border: none;
-  border-radius: 6px;
-  background: #3b82f6;
-  color: white;
+  border-radius: 8px;
   cursor: pointer;
+  background: #6c63ff;
+  color: white;
+  transition: 0.2s;
 }
 
-.add-btn:hover {
-  background: #2563eb;
+button:hover {
+  background: #574fd6;
 }
 
-.todo-item {
+ul {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+li {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  background: #2a2a2a;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.08);
   padding: 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   margin-bottom: 10px;
-}
-
-.delete-btn {
-  margin-left: auto;
-  background: #ef4444;
-  border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.delete-btn:hover {
-  background: #dc2626;
-}
-
-.completed {
-  text-decoration: line-through;
-  color: #9ca3af;
 }

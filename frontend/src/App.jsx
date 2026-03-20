@@ -1,183 +1,74 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import "./App.css";
 
-import TodoForm from "./components/TodoForm";
-import TodoList from "./components/TodoList";
+const API = "https://to-do-list-vr11.onrender.com"; // change if needed
 
 function App() {
-
-  const [title, setTitle] = useState("");
   const [todos, setTodos] = useState([]);
-  const [filter, setFilter] = useState("all");
-
-  // Filter logic
-  const filteredTodos = todos.filter((todo) => {
-    if (filter === "active") return !todo.completed;
-    if (filter === "completed") return todo.completed;
-    return true;
-  });
+  const [text, setText] = useState("");
 
   // Fetch todos
-  const fetchTodos = async () => {
+  const getTodos = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/todos");
-      setTodos(res.data);
-    } catch (error) {
-      console.error(error);
+      const res = await fetch(`${API}/todos`);
+      const data = await res.json();
+      setTodos(data);
+    } catch (err) {
+      console.error(err);
     }
   };
 
   useEffect(() => {
-    fetchTodos();
+    getTodos();
   }, []);
 
   // Add todo
   const addTodo = async () => {
-    if (!title.trim()) return;
+    if (!text.trim()) return;
 
-    try {
-      const res = await axios.post(
-        "http://localhost:5000/api/todos",
-        { title }
-      );
+    await fetch(`${API}/todos`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    });
 
-      setTodos((prev) => [...prev, res.data]);
-      setTitle("");
-
-    } catch (error) {
-      console.error(error);
-    }
+    setText("");
+    getTodos();
   };
 
   // Delete todo
   const deleteTodo = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/todos/${id}`);
-
-      setTodos((prev) =>
-        prev.filter((todo) => todo.id !== id)
-      );
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // Toggle complete
-  const toggleTodo = async (id, completed) => {
-    try {
-      const res = await axios.put(
-        `http://localhost:5000/api/todos/${id}`,
-        { completed }
-      );
-
-      setTodos((prev) =>
-        prev.map((todo) =>
-          todo.id === id ? res.data : todo
-        )
-      );
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // Update title
-  const updateTodo = async (id, title) => {
-    try {
-      const res = await axios.put(
-        `http://localhost:5000/api/todos/title/${id}`,
-        { title }
-      );
-
-      setTodos((prev) =>
-        prev.map((todo) =>
-          todo.id === id ? res.data : todo
-        )
-      );
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // Clear completed
-  const clearCompleted = async () => {
-    try {
-
-      const completedTodos = todos.filter(t => t.completed);
-
-      for (let todo of completedTodos) {
-        await axios.delete(`http://localhost:5000/api/todos/${todo.id}`);
-      }
-
-      setTodos((prev) => prev.filter(t => !t.completed));
-
-    } catch (error) {
-      console.error(error);
-    }
+    await fetch(`${API}/todos/${id}`, {
+      method: "DELETE",
+    });
+    getTodos();
   };
 
   return (
+    <div className="container">
+      <h1>✨ Todo App</h1>
 
-    <div className="app-container">
-
-      <h1 className="title">Todo App</h1>
-
-      <TodoForm
-        title={title}
-        setTitle={setTitle}
-        addTodo={addTodo}
-      />
-
-      {/* FILTER BUTTONS */}
-      <div className="filters">
-
-        <button
-          className={filter === "all" ? "active" : ""}
-          onClick={() => setFilter("all")}
-        >
-          All
-        </button>
-
-        <button
-          className={filter === "active" ? "active" : ""}
-          onClick={() => setFilter("active")}
-        >
-          Active
-        </button>
-
-        <button
-          className={filter === "completed" ? "active" : ""}
-          onClick={() => setFilter("completed")}
-        >
-          Completed
-        </button>
-
+      <div className="input-box">
+        <input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Add a task..."
+        />
+        <button onClick={addTodo}>Add</button>
       </div>
 
-      {/* COUNTER */}
-      <p className="counter">
-        {todos.filter(todo => !todo.completed).length} tasks left
-      </p>
-
-      <TodoList
-        todos={filteredTodos}
-        deleteTodo={deleteTodo}
-        toggleTodo={toggleTodo}
-        updateTodo={updateTodo}
-        setTodos={setTodos}
-      />
-
-      {/* CLEAR COMPLETED */}
-      <button className="clear-btn" onClick={clearCompleted}>
-        Clear Completed
-      </button>
-
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            {todo.text}
+            <button onClick={() => deleteTodo(todo.id)}>❌</button>
+          </li>
+        ))}
+      </ul>
     </div>
-
   );
-
 }
 
 export default App;
