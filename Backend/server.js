@@ -12,8 +12,8 @@ app.get("/", (req, res) => {
     res.send("Backend is running 🚀");
 });
 
-// Todo routes
-app.use("/", todoRoutes);
+// Mount routes
+app.use("/todos", todoRoutes);
 
 const PORT = process.env.PORT || 5000;
 
