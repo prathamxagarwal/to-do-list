@@ -7,10 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Test route
-app.get("/test", (req, res) => {
-    res.send("Server working");
-});
+
 
 // Todo routes
 const todoRoutes = require("./todos");
