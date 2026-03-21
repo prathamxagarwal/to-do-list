@@ -11,13 +11,13 @@ pool.query(`
 `);
 
 // GET all todos
-router.get("/todos", async (req, res) => {
+router.get("/", async (req, res) => {
     const result = await pool.query("SELECT * FROM todos ORDER BY id DESC");
     res.json(result.rows);
 });
 
 // ADD todo
-router.post("/todos", async (req, res) => {
+router.post("/", async (req, res) => {
     const { text } = req.body;
     const newTodo = await pool.query(
         "INSERT INTO todos (text) VALUES ($1) RETURNING *",
@@ -27,7 +27,7 @@ router.post("/todos", async (req, res) => {
 });
 
 // DELETE todo
-router.delete("/todos/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
     const { id } = req.params;
     await pool.query("DELETE FROM todos WHERE id = $1", [id]);
     res.json("Deleted");

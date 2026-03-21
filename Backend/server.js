@@ -15,8 +15,8 @@ app.get("/test", (req, res) => {
     res.send("Test route working");
 });
 
-// mount routes
-app.use("/", todoRoutes);
+// mount todos router
+app.use("/todos", todoRoutes);
 
 const PORT = process.env.PORT || 5000;
 
