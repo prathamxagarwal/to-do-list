@@ -7,12 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Root route
 app.get("/", (req, res) => {
     res.send("Backend is running 🚀");
 });
 
-// Mount routes
+// Mount todos routes
 app.use("/todos", todoRoutes);
 
 const PORT = process.env.PORT || 5000;
