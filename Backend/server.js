@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const todoRoutes = require("./todo");
+const todoRoutes = require("./routes/todos");
 
 const app = express();
 
