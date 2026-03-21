@@ -15,6 +15,10 @@ app.get("/test", (req, res) => {
     res.send("Test route working");
 });
 
+app.post("/todos", (req, res) => {
+    res.send("POST route hit");
+});
+
 // mount todos router
 app.use("/todos", todoRoutes);
 
