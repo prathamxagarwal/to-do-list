@@ -6,18 +6,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const todoRoutes = require("./routes/todos");
-
-app.use("/api", todoRoutes);
-
 app.get("/", (req, res) => {
     res.send("Backend is running 🚀");
 });
 
-// Debug route
-app.get("/hello", (req, res) => {
-    res.send("Hello works");
+// Direct test route
+app.get("/todos", (req, res) => {
+    res.send("Todos route working");
 });
+
+// Import routes AFTER test
+const todoRoutes = require("./routes/todos");
+app.use("/", todoRoutes);
 
 const PORT = process.env.PORT || 5000;
 
