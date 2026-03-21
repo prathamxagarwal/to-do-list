@@ -2,6 +2,14 @@ const express = require("express");
 const router = express.Router();
 const pool = require("./db");
 
+// create table
+pool.query(`
+    CREATE TABLE IF NOT EXISTS todos (
+        id SERIAL PRIMARY KEY,
+        text VARCHAR(255)
+    );
+`);
+
 // GET all todos
 router.get("/", async (req, res) => {
     const result = await pool.query("SELECT * FROM todos ORDER BY id DESC");
