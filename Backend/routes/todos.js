@@ -2,14 +2,20 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../db");
 
-console.log("Todos routes file loaded");
+// Create table automatically if not exists
+pool.query(`
+    CREATE TABLE IF NOT EXISTS todos (
+        id SERIAL PRIMARY KEY,
+        text VARCHAR(255)
+    );
+`).then(() => {
+    console.log("Todos table ready");
+}).catch(err => console.log(err));
 
 // GET all todos
 router.get("/todos", async (req, res) => {
     try {
-        const result = await pool.query(
-            "SELECT * FROM todos ORDER BY id DESC"
-        );
+        const result = await pool.query("SELECT * FROM todos ORDER BY id DESC");
         res.json(result.rows);
     } catch (err) {
         console.error(err.message);
