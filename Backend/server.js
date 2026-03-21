@@ -9,7 +9,7 @@ app.use(express.json());
 const todoRoutes = require("./routes/todos");
 
 
-app.use("/", todoRoutes);
+app.use("/api", todoRoutes);
 
 app.get("/", (req, res) => {
     res.send("Backend is running 🚀");

@@ -5,7 +5,9 @@ const pool = require("../db");
 // GET all todos
 router.get("/todos", async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM todos ORDER BY id DESC");
+        const result = await pool.query(
+            "SELECT * FROM todos ORDER BY id DESC"
+        );
         res.json(result.rows);
     } catch (err) {
         console.error(err.message);
