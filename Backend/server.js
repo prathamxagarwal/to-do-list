@@ -8,11 +8,15 @@ app.use(express.json());
 
 const todoRoutes = require("./routes/todos");
 
-
 app.use("/api", todoRoutes);
 
 app.get("/", (req, res) => {
     res.send("Backend is running 🚀");
+});
+
+// Debug route
+app.get("/hello", (req, res) => {
+    res.send("Hello works");
 });
 
 const PORT = process.env.PORT || 5000;
