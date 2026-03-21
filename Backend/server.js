@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const todoRoutes = require("./routes/todos");
+const todoRoutes = require("./todos");
 
 const app = express();
 
@@ -11,7 +11,6 @@ app.get("/", (req, res) => {
     res.send("Backend is running 🚀");
 });
 
-// Mount todos routes
 app.use("/todos", todoRoutes);
 
 const PORT = process.env.PORT || 5000;
