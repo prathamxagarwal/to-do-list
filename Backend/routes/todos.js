@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../db");
 
+console.log("Todos routes file loaded");
+
 // GET all todos
 router.get("/todos", async (req, res) => {
     try {
