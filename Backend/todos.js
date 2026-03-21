@@ -26,6 +26,16 @@ router.post("/", async (req, res) => {
     res.json(newTodo.rows[0]);
 });
 
+
+router.post("", async (req, res) => {
+    const { text } = req.body;
+    const newTodo = await pool.query(
+        "INSERT INTO todos (text) VALUES ($1) RETURNING *",
+        [text]
+    );
+    res.json(newTodo.rows[0]);
+});
+
 // DELETE todo
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
