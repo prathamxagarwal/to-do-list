@@ -11,6 +11,11 @@ app.get("/", (req, res) => {
     res.send("Backend is running 🚀");
 });
 
+app.get("/test", (req, res) => {
+    res.send("Test route working");
+});
+
+// mount todos router
 app.use("/todos", todoRoutes);
 
 const PORT = process.env.PORT || 5000;

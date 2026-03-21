@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("./db");
 
-// Create table
+// create table
 pool.query(`
     CREATE TABLE IF NOT EXISTS todos (
         id SERIAL PRIMARY KEY,
